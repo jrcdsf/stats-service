@@ -1,7 +1,6 @@
 package com.jrcdsf.stats.infra.services
 
 import com.jrcdsf.stats.domain.entities.Event
-import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -13,9 +12,7 @@ class StatsService {
 
     private lateinit var events: List<Event>;
 
-    private val logger = KotlinLogging.logger {}
-
-    fun generateStats() : String {
+    fun generateStats(): String {
         getStats()
         return if (events.isNotEmpty()) {
             val xList = events.map { it.x }
@@ -26,13 +23,11 @@ class StatsService {
             val sumY = yList.sum()
             val avgY = sumY.toFloat() / yList.size
 
-            logger.debug { "xList size : ${xList.size}, sumX : $sumX, avgX: $avgX, yList size : ${yList.size}, sumY: $sumY, avgY: $avgY" }
-
             "$total,$sumX,$avgX,$sumY,$avgY"
         } else "EMPTY"
     }
 
-    private fun getStats(){
+    private fun getStats() {
         events = eventService.getEventsWithinThreshold()
     }
 

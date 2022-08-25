@@ -1,18 +1,15 @@
 package com.jrcdsf.stats.infra.repositories
 
+import co.touchlab.stately.isolate.IsolateState
 import com.jrcdsf.stats.domain.entities.Event
 import org.springframework.stereotype.Repository
 
-import java.util.concurrent.CopyOnWriteArrayList
-
 @Repository
-class EventRepository(private var storedEvents: CopyOnWriteArrayList<Event>) {
-    fun save(eventList: List<Event>): Boolean {
-        val result = storedEvents.addAll(eventList)
-        return result
-    }
+class EventRepository {
 
-    fun getAllEvents(): List<Event> {
-        return storedEvents
-    }
+    private val storedEvents = IsolateState { mutableSetOf<Event>() }
+    fun save(eventList: List<Event>): Boolean = storedEvents.access { it.addAll(eventList) }
+
+    fun getAllEvents(): MutableSet<Event> = storedEvents.access { it }
+
 }
