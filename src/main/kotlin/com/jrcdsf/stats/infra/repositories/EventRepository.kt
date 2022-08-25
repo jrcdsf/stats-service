@@ -9,7 +9,5 @@ class EventRepository {
 
     private val storedEvents = IsolateState { mutableListOf<Event>() }
     fun save(eventList: List<Event>): Boolean = storedEvents.access { it.addAll(eventList) }
-
-    fun getAllEvents(): MutableList<Event> = storedEvents.access { it }
-
+    fun getAllEvents(): List<Event> = storedEvents.access { it }
 }

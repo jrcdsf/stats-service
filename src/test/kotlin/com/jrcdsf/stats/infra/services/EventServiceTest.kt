@@ -1,40 +1,47 @@
 package com.jrcdsf.stats.infra.services
 
+import com.jrcdsf.stats.infra.repositories.EventRepository
+import com.jrcdsf.stats.util.Helper
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.time.Instant
 
 internal class EventServiceTest {
+
+    lateinit var eventRepository: EventRepository
 
     lateinit var eventService: EventService
 
     @BeforeEach
     fun init() {
-        eventService = EventService()
+        eventRepository = EventRepository()
+        eventService = EventService(eventRepository)
     }
 
     @Test
-    fun save() {
+    fun `saving a list of events should return true if the list is saved`() {
+        assertEquals(true, eventService.save(Helper.generateEventList(3, 1)))
     }
 
     @Test
-    fun getEventsWithinThreshold() {
-        val threshold: Int = 60000
-        val nowTimestamp = "1661349697469"
-        val now = Instant.ofEpochMilli(nowTimestamp.toLong())
-        val nowMinusThreshold = Instant.ofEpochMilli(nowTimestamp.toLong() - threshold)
+    fun `getEventsWithinThreshold for a list within the threshold should return a list of events matching threshold`() {
 
-        val events = listOf(
-            "1661349681486",
-            "1661349649474",
-            "1661349648474",
-            "1661349702474",
-            "1661349648465"
-        ).map { Instant.ofEpochMilli(it.toLong()) }
-        val filtered = events.filter { event -> now.isAfter(event) && nowMinusThreshold.isBefore(event) }
-        println(filtered)
+        val saved = eventService.save(Helper.generateEventList(5, 1))
 
-        eventService.getEventsWithinThreshold()
+        val actual = eventService.getEventsWithinThreshold()
 
+        assert(saved)
+        assert(actual.size == 5)
+    }
+
+    @Test
+    fun `getEventsWithinThreshold for a list outside the threshold should return an empty list`() {
+
+        val saved = eventService.save(Helper.generateEventList(0, 5))
+
+        val actual = eventService.getEventsWithinThreshold()
+
+        assert(saved)
+        assert(actual.isEmpty())
     }
 }
