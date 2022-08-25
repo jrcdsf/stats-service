@@ -1,5 +1,6 @@
 package com.jrcdsf.stats.controllers
 
+import com.jrcdsf.stats.infra.util.StatsCalculation
 import com.jrcdsf.stats.util.Helper
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +20,7 @@ internal class StatsControllerTest {
     @Autowired
     lateinit var mvc: MockMvc
 
-    private val body = Helper.generateEventsBody(3, 1)
+    private val body = Helper.generateEventsBody(3, 0)
 
     @Test
     fun `GET to endpoint stats without saving events should return 404`() {
@@ -30,6 +31,7 @@ internal class StatsControllerTest {
 
     @Test
     fun `GET to endpoint stats with valid events already saved should return 200`() {
+        val expected = StatsCalculation.calculateStats(body)
         mvc.post("/event") {
             contentType = MediaType.TEXT_PLAIN
             content = body
@@ -38,9 +40,9 @@ internal class StatsControllerTest {
                 status { isOk() }
                 content {
                     contentTypeCompatibleWith("text/plain")
+                    string(expected)
                 }
             }
         }
-
     }
 }

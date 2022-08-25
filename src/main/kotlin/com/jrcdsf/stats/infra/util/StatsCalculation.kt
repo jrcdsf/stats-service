@@ -17,4 +17,19 @@ object StatsCalculation {
             "$total,$sumX,$avgX,$sumY,$avgY"
         } else "EMPTY"
     }
+
+    fun calculateStats(events: String): String {
+        val eventList = Converters.convertBodyToEvents(events)
+        return if (eventList.isNotEmpty()) {
+            val xList = eventList.map { it.x }
+            val yList = eventList.map { it.y }
+            val total = eventList.size
+            val sumX = xList.sum()
+            val avgX = sumX / xList.size
+            val sumY = yList.sum()
+            val avgY = sumY.toFloat() / yList.size
+
+            "$total,$sumX,$avgX,$sumY,$avgY"
+        } else "EMPTY"
+    }
 }

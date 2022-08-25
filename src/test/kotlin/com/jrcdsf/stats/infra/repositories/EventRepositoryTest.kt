@@ -16,17 +16,17 @@ internal class EventRepositoryTest {
 
     @Test
     fun `saving a list of events should return true`() {
-        assert(eventRepository.save(Helper.generateEventList(3 ,1)))
+        assert(eventRepository.save(Helper.generateEventList(3, 1)))
     }
 
     @Test
     fun `getAllEvents should return a list of all stored events`() {
-        val expected = Helper.generateEventList(3 ,1)
+        val expected = Helper.generateEventList(3, 1)
 
         val saved = eventRepository.save(expected)
         val actual = eventRepository.getAllEvents()
 
         assert(saved)
-        assertIterableEquals(expected,actual)
+        assertIterableEquals(expected, actual)
     }
 }

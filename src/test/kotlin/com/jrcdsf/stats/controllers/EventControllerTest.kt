@@ -13,7 +13,8 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc(addFilters = false)
 internal class EventControllerTest {
 
-    @Autowired lateinit var mvc: MockMvc
+    @Autowired
+    lateinit var mvc: MockMvc
     private val body = """1661441426010,0.0747666061,1729343026
                         1661441457983,0.3258131742,1161486840
                         1661441480998,0.0906980783,1791770265
