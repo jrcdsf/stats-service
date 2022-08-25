@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository
 @Repository
 class EventRepository {
 
-    private val storedEvents = IsolateState { mutableSetOf<Event>() }
+    private val storedEvents = IsolateState { mutableListOf<Event>() }
     fun save(eventList: List<Event>): Boolean = storedEvents.access { it.addAll(eventList) }
 
-    fun getAllEvents(): MutableSet<Event> = storedEvents.access { it }
+    fun getAllEvents(): MutableList<Event> = storedEvents.access { it }
 
 }

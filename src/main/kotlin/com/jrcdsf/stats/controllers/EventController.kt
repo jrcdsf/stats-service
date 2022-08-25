@@ -23,16 +23,17 @@ class EventController {
         eventService.save(eventList)
     }
 
-    private fun convertBodyToEvents(body: String): MutableList<Event> {
-        val eventList: MutableList<Event> = mutableListOf()
+    private fun convertBodyToEvents(body: String): List<Event> {
 
         val lines = body.split("\r?\n|\r".toRegex()).toTypedArray()
-        lines.iterator().forEach { line ->
-            val (timestamp, x, y) = line.split(",")
-            eventList.add(Event(timestamp = Instant.ofEpochMilli(timestamp.toLong()), x = x.toDouble(), y = y.toInt()))
+        val eventList = lines.flatMap {
+            try {
+                val (timestamp, x, y) = it.split(",")
+                listOf(Event(timestamp = Instant.ofEpochMilli(timestamp.toLong()), x = x.toDouble(), y = y.toInt()))
+            } catch (e: Exception) {
+                emptyList()
+            }
         }
-
         return eventList
-
     }
 }
