@@ -1,10 +1,10 @@
-# HelloFresh Stats Service Demo
+# Stats Service Demo
 
 Author: Jose Roberto Filho (jrcdsf@gmail.com)
 Date: August 26 2022
 
 
-HelloFresh Stats Service is a HTTP demo service for event recording of some arbitrary data over a closed period of time. 
+Stats Service is a HTTP demo service for event recording of some arbitrary data over a closed period of time. 
 It does also provide statistics over the events recorded.
 
 It does expose 2 endpoints:
