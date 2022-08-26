@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service
 @Service
 class StatsService(private val eventService: EventService) {
 
-    private lateinit var events: List<Event>;
+    private lateinit var events: List<Event>
 
     fun generateStats(): String {
         getStats()
         return StatsCalculation.calculateStats(events)
     }
 
-    private fun getStats(threshold: Int = 60000) {
-        events = eventService.getEventsWithinThreshold(threshold)
+    private fun getStats() {
+        events = eventService.getEventsFromTheLast60Seconds()
     }
 
 

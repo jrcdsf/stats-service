@@ -12,7 +12,7 @@ class EventService(private val eventRepository: EventRepository) {
         return eventRepository.save(events)
     }
 
-    fun getEventsWithinThreshold(threshold: Int = 60000): List<Event> {
+    fun getEventsFromTheLast60Seconds(): List<Event> {
         val bucketList = mutableListOf<Event>()
         val now = Instant.ofEpochMilli(System.currentTimeMillis())
 

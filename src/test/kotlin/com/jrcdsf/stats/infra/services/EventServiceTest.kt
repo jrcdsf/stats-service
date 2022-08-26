@@ -24,22 +24,22 @@ internal class EventServiceTest {
     }
 
     @Test
-    fun `getEventsWithinThreshold for a list within the threshold should return a list of events matching threshold`() {
+    fun `getEventsFromTheLast60Seconds should return a list of events from the last 60 secs window`() {
 
         val saved = eventService.save(Helper.generateEventList(5, 1))
 
-        val actual = eventService.getEventsWithinThreshold()
+        val actual = eventService.getEventsFromTheLast60Seconds()
 
         assertEquals(6, saved)
         assert(actual.size == 5)
     }
 
     @Test
-    fun `getEventsWithinThreshold for a list outside the threshold should return an empty list`() {
+    fun `getEventsFromTheLast60Seconds should return an empty list if there are no events in the last 60 secs window`() {
 
         val saved = eventService.save(Helper.generateEventList(0, 5))
 
-        val actual = eventService.getEventsWithinThreshold()
+        val actual = eventService.getEventsFromTheLast60Seconds()
 
         assertEquals(5, saved)
         assert(actual.isEmpty())
