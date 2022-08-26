@@ -20,7 +20,7 @@ internal class EventRepositoryTest {
     }
 
     @Test
-    fun `getBucket should return a list of all stored events`() {
+    fun `getBucket should return a list of events from that bucket`() {
         val expected = Helper.generateEventList(1, 0)
 
         val saved = eventRepository.save(expected)
