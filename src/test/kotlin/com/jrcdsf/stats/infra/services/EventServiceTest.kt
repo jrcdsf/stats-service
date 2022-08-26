@@ -19,8 +19,8 @@ internal class EventServiceTest {
     }
 
     @Test
-    fun `saving a list of events should return true if the list is saved`() {
-        assertEquals(true, eventService.save(Helper.generateEventList(3, 1)))
+    fun `saving a list of events should return the number of events saved`() {
+        assertEquals(4, eventService.save(Helper.generateEventList(3, 1)))
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class EventServiceTest {
 
         val actual = eventService.getEventsWithinThreshold()
 
-        assert(saved)
+        assertEquals(6, saved)
         assert(actual.size == 5)
     }
 
@@ -41,7 +41,7 @@ internal class EventServiceTest {
 
         val actual = eventService.getEventsWithinThreshold()
 
-        assert(saved)
+        assertEquals(5, saved)
         assert(actual.isEmpty())
     }
 }

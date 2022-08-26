@@ -2,9 +2,8 @@ package com.jrcdsf.stats.infra.util
 
 import com.jrcdsf.stats.domain.entities.Event
 import com.jrcdsf.stats.util.Helper
+import org.junit.jupiter.api.Assertions.assertIterableEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import java.time.Instant
 
 internal class ConvertersTest {
